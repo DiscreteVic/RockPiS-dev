@@ -5,7 +5,14 @@ APP=app
 
 all: clean build pack upload
 
-build: 
+build-c: 
+	@ mkdir -p build/
+	@ $(GCC)-gcc -mtune=cortex-a35 -S main.c -o build/main.asm
+	@ $(GCC)-as -o build/main.o build/main.asm
+	@ $(GCC)-ld -o build/main build/main.o
+	@ $(GCC)-objcopy -S -O binary build/main build/app.bin
+
+build-asm: 
 	@ mkdir -p build/
 	@ $(GCC)-as -o build/$(APP).o $(APP).asm
 	@ $(GCC)-ld -o build/$(APP) build/$(APP).o

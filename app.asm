@@ -1,6 +1,3 @@
-# Developed by Eystur Mori
-# https://forum.radxa.com/t/solved-is-there-a-way-to-load-a-program-directly-into-sram-using-usb-otg/5475
-
 .cpu cortex-a35
 .global _start
 
