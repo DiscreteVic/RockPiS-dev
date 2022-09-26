@@ -3,7 +3,7 @@ GCC=aarch64-none-elf
 
 APP=app
 
-all: clean build pack upload
+all: clean build-c pack upload
 
 build-c: 
 	@ mkdir -p build/

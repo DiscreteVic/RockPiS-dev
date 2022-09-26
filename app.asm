@@ -23,4 +23,4 @@ _start:
         mov w10, ROCKPIS_BLUE_LED
         str w10, [x9, GPIO_SWPORTA_DDR]
         str w10, [x9, GPIO_SWPORTA_DR]
-        b.al .
+        b.al . // While 1
