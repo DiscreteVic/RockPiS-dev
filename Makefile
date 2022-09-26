@@ -3,20 +3,15 @@ GCC=aarch64-none-elf
 
 APP=app
 
-all: clean build-c pack upload
+all: clean build pack upload
 
-build-c: 
+build: 
 	@ mkdir -p build/
-	@ $(GCC)-gcc -mtune=cortex-a35 -S main.c -o build/main.asm
-	@ $(GCC)-as -o build/main.o build/main.asm
-	@ $(GCC)-ld -o build/main build/main.o
+	@ $(GCC)-gcc -mtune=cortex-a35 -ffreestanding -c -o build/main.o -Iinclude main.c 
+	@ $(GCC)-gcc -mtune=cortex-a35 -ffreestanding -c -o build/rk3308.o include/rk3308.c
+	@ $(GCC)-gcc --entry=main -ffreestanding -nostdlib build/main.o build/rk3308.o -o build/main
 	@ $(GCC)-objcopy -S -O binary build/main build/app.bin
 
-build-asm: 
-	@ mkdir -p build/
-	@ $(GCC)-as -o build/$(APP).o $(APP).asm
-	@ $(GCC)-ld -o build/$(APP) build/$(APP).o
-	@ $(GCC)-objcopy -S -O binary build/$(APP) build/$(APP).bin
 
 pack:
 	@ python3 pack.py
