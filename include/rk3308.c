@@ -38,5 +38,30 @@ void setGPIO_DDR(gpio_t gpio, uint32_t dirReg){
 
 void setGPIO_DR(gpio_t gpio, uint32_t dataReg){
     writeWordRegister(getIPBaseAddr(GPIO,gpio) + GPIO_SWPORTA_DR, dataReg);
+}
 
+uint32_t getGPIO_DR(gpio_t gpio){  //NOT TESTED
+    return readWordRegister(getIPBaseAddr(GPIO,gpio) + GPIO_SWPORTA_DR);
+}
+
+void setGPIO_Pin(gpio_t gpio, gpioPin_t pin, bool pinValue){
+    uint32_t gpioDR;
+
+    gpioDR = getGPIO_DR(gpio);
+
+    if(pinValue) gpioDR = gpioDR | (uint32_t)(1U << pin);
+    else gpioDR = gpioDR & ~((uint32_t)(1U << pin));
+
+    setGPIO_DR(gpio, gpioDR);
+}
+
+bool getGPIO_Pin(gpio_t gpio, gpioPin_t pin){ //NOT TESTED
+    uint32_t gpioDR;
+    bool pinValue;
+
+    gpioDR = getGPIO_DR(gpio);
+
+    pinValue = (bool)((gpioDR >> pin) & 0x0001);
+
+    return pinValue;
 }
