@@ -1,8 +1,6 @@
 # Build results
 build/
 
-# vscode settings
-.vscode/
 
 # Prerequisites
 *.d
@@ -56,3 +54,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+.vscode/
