@@ -1,6 +1,9 @@
 # Build results
 build/
 
+# vscode settings
+.vscode/
+
 # Prerequisites
 *.d
 
