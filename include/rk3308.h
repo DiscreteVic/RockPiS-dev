@@ -10,13 +10,46 @@ typedef enum{
     true = 1
 } bool;
 
-#define GPIO_BASE_ADDR     0xFF220000U
-#define GPIO_BASE_OFFSET   0x00010000U
+#define CRU_BASE_ADDR       0xFF000000U
+
+#define CRU_DPLL_CON0       CRU_BASE_ADDR + 0x20U      
+#define CRU_DPLL_CON1       CRU_BASE_ADDR + 0x24U    
+#define CRU_CLKGATE_CON1    CRU_BASE_ADDR + 0x304U      
+
+#define GRF_BASE_ADDR       0xFF000000U
+
+#define GRF_GPIO2A_I0MUX    GRF_BASE_ADDR + 0x0040U
+
+#define GPIO_BASE_ADDR      0xFF220000U
+#define GPIO_BASE_OFFSET    0x00010000U
 
 #define GPIO_SWPORTA_DR     0x0000U
 #define GPIO_SWPORTA_DDR    0x0004U
 
+
+#define UART0_BASE_ADDR     0xFF0A0000U
+#define UART1_BASE_ADDR     0xFF0B0000U
+#define UART2_BASE_ADDR     0xFF0C0000U
+#define UART3_BASE_ADDR     0xFF0D0000U
+#define UART4_BASE_ADDR     0xFF0E0000U
+
+#define UART0_RBR           UART0_BASE_ADDR + 0x0000U
+#define UART0_THR           UART0_BASE_ADDR + 0x0000U
+#define UART0_DLL           UART0_BASE_ADDR + 0x0000U
+#define UART0_DLH           UART0_BASE_ADDR + 0x0004U
+#define UART0_IER           UART0_BASE_ADDR + 0x0004U
+#define UART0_IIR           UART0_BASE_ADDR + 0x0008U
+
+#define UART0_LCR           UART0_BASE_ADDR + 0x000CU
+
+#define UART0_MCR           UART0_BASE_ADDR + 0x0010U
+
+#define UART0_USR           UART0_BASE_ADDR + 0x0006U   //RO
+
+
 #define getIPBaseAddr(ip,num) ip##_BASE_ADDR + (ip##_BASE_OFFSET * num)
+
+
 
 typedef enum{
     GPIO0 = 0,
@@ -76,5 +109,7 @@ uint32_t getGPIO_DR(gpio_t gpio);
 void setGPIO_Pin(gpio_t gpio, gpioPin_t pin, bool pinValue);
 
 bool getGPIO_Pin(gpio_t gpio, gpioPin_t pin);
+
+void initUART();
 
 #endif
