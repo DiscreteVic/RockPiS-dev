@@ -67,6 +67,9 @@
 
 #define UART1_USR           UART1_BASE_ADDR + 0x0006U   //RO
 
+// CYCLES TO GET A MILLISECOND
+#define MS_CYCLES           2826U
+
 #define getIPBaseAddr(ip,num) ip##_BASE_ADDR + (ip##_BASE_OFFSET * num)
 
 

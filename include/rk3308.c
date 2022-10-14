@@ -71,7 +71,7 @@ void wait_ms(uint32_t milliseconds){
     //AVOID TO USE MULTIPLICATION DUE TO RESOURCES CONSUPTION (TO BE CONFIRMED)
     for(j = 0; j < milliseconds; j++){
         //CYCLES VAULE OBTAINED EXPERIMENTALY
-        for(i = 0; i < 2826; i++);
+        for(i = 0; i < MS_CYCLES; i++);
     }
 }
 
