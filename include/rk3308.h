@@ -10,14 +10,22 @@ typedef enum{
     true = 1
 } bool;
 
-#define CRU_BASE_ADDR       0xFF000000U
+#define CRU_BASE_ADDR       0xFF500000U
 
 #define CRU_DPLL_CON0       CRU_BASE_ADDR + 0x20U      
-#define CRU_DPLL_CON1       CRU_BASE_ADDR + 0x24U    
-#define CRU_CLKGATE_CON1    CRU_BASE_ADDR + 0x304U      
+#define CRU_DPLL_CON1       CRU_BASE_ADDR + 0x24U
+#define CRU_CLKGATE_CON1    CRU_BASE_ADDR + 0x304U
+#define CRU_CLKGATE_CON2    CRU_BASE_ADDR + 0x308U
+#define CRU_CLKSEL_CON10    CRU_BASE_ADDR + 0x128U
+#define CRU_CLKSEL_CON11    CRU_BASE_ADDR + 0x12CU
+#define CRU_CLKSEL_CON12    CRU_BASE_ADDR + 0x130U
+#define CRU_CLKSEL_CON13    CRU_BASE_ADDR + 0x134U
+#define CRU_CLKSEL_CON14    CRU_BASE_ADDR + 0x138U
+#define CRU_CLKSEL_CON15    CRU_BASE_ADDR + 0x13CU
 
 #define GRF_BASE_ADDR       0xFF000000U
 
+#define GRF_GPIO1D_I0MUX    GRF_BASE_ADDR + 0x0038U
 #define GRF_GPIO2A_I0MUX    GRF_BASE_ADDR + 0x0040U
 
 #define GPIO_BASE_ADDR      0xFF220000U
@@ -46,6 +54,20 @@ typedef enum{
 
 #define UART0_USR           UART0_BASE_ADDR + 0x0006U   //RO
 
+
+
+#define UART1_RBR           UART1_BASE_ADDR + 0x0000U
+#define UART1_THR           UART1_BASE_ADDR + 0x0000U
+#define UART1_DLL           UART1_BASE_ADDR + 0x0000U
+#define UART1_DLH           UART1_BASE_ADDR + 0x0004U
+#define UART1_IER           UART1_BASE_ADDR + 0x0004U
+#define UART1_IIR           UART1_BASE_ADDR + 0x0008U
+
+#define UART1_LCR           UART1_BASE_ADDR + 0x000CU
+
+#define UART1_MCR           UART1_BASE_ADDR + 0x0010U
+
+#define UART1_USR           UART1_BASE_ADDR + 0x0006U   //RO
 
 #define getIPBaseAddr(ip,num) ip##_BASE_ADDR + (ip##_BASE_OFFSET * num)
 

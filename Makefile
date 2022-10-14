@@ -16,6 +16,10 @@ build:
 pack:
 	@ python3 pack.py
 
+newpack:
+	@ python3 newpack.py rk3308_ddr_589MHz_uart1_m0_v1.26.bin build/app.bin build/loader.bin
+
+
 upload:
 	@ sudo timeout 2 rkdeveloptool db build/loader.bin
 

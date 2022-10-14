@@ -138,11 +138,19 @@ void initUART(){
 
     // CONFIGURE CGU
 
-    //Configure clk selectors and divs S10_13 S10_0 S11_14 S11_0 
+    //Configure clk selectors and divs S13_13 S13_0 S14_14 S15_0 
 
-    //Set de gates => G1_9 G1_10 G1_12
+    writeMaskedRegister(CRU_CLKSEL_CON13, 0x0000);
+    writeMaskedRegister(CRU_CLKSEL_CON14, 0x8000);
+    // RK3308 TRM-Part1 15.6.3`
+    // Divider 46875/72
+    writeWordRegister(CRU_CLKSEL_CON15, 0xB71B0048);
 
-    writeMaskedRegister(CRU_CLKGATE_CON1, 0x1600);
+
+    //Set de gates => G1_13 G1_15 G2_0
+
+    writeMaskedRegister(CRU_CLKGATE_CON1, 0xA000);
+    writeMaskedRegister(CRU_CLKGATE_CON2, 0x0001);
 
     //D1
 
@@ -150,24 +158,25 @@ void initUART(){
 
     // CONFIGURE GRF
 
-    writeByteRegister(GRF_GPIO2A_I0MUX, 0, 0x05);
+    writeMaskedRegister(GRF_GPIO1D_I0MUX, 0x0005);
 
 
     //SET LCR[7] to select DLL,DLH
-    writeBitRegister(UART0_LCR, 7, 1);
+    writeBitRegister(UART1_LCR, 7, 1);
     
     //SET LCR[1:0] to select data width
-    writeBitRegister(UART0_LCR, 0, 1);
-    writeBitRegister(UART0_LCR, 1, 1);
+    writeBitRegister(UART1_LCR, 0, 1);
+    writeBitRegister(UART1_LCR, 1, 1);
 
     //SET DLL,DLH to decide baud rate
-    writeByteRegister(UART0_DLL, 0, 0x01);
-    writeByteRegister(UART0_DLH, 0, 0x00);
+    writeByteRegister(UART1_DLL, 0, 0x01);
+    writeByteRegister(UART1_DLH, 0, 0x00);
 
+    while(1){
     //Write data to THR Set MCR to start the transfer
-    writeByteRegister(UART0_THR, 0, 0x5A);
-    writeBitRegister(UART0_MCR, 2, 1);
-
+    writeByteRegister(UART1_THR, 0, 0x5A);
+    writeBitRegister(UART1_MCR, 2, 1);
+    }
     //Wait transfer end
 
 
