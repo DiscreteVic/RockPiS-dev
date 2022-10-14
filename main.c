@@ -15,17 +15,14 @@ void main(){
 
 
   //  initUART();
-    mdpCreatePort(GPIO_DR(2), A4, MS_CYCLES, 500, &mdpPortA);
-    mdpCreatePort(GPIO_DR(0), B4, MS_CYCLES, 500, &mdpPortB);
+    mdpCreatePort(GPIO_DR(2), A4, MS_CYCLES, 1, &mdpPortA);
+    mdpCreatePort(GPIO_DR(0), B4, MS_CYCLES, 1, &mdpPortB);
 
     mdpInitPort(mdpPortA);
-    
+
     while(1){
         
-        mdpDisplayValue(mdpPortA, 0x5A5AF5AE);
-        mdpSetPort(mdpPortB, 1);
-        wait_ms(3000);
-        mdpSetPort(mdpPortB, 0);
+        mdpUARTDisplayValue(mdpPortA, 0x5A);
 
     }
 }
