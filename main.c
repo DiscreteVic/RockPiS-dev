@@ -3,7 +3,9 @@
 #include "mdp.h"
 
 struct mdpPort mdpPortA, mdpPortB;
-
+uint32_t testReg;
+// TO REVIEW
+// ACCESS MEMORY ERROR, VARIABLE INITIALIZATION OUTSIDE MAIN CHANGE VALUES
 
 void main(){
     initRK3308();
@@ -20,9 +22,13 @@ void main(){
 
     mdpInitPort(mdpPortA);
 
+    testReg = 0xFAB75A31;
     while(1){
         
-        mdpUARTDisplayValue(mdpPortA, 0x5A);
+        mdpUARTDisplayValue(mdpPortA, (uint8_t)(testReg & 0x000000FF));
+        mdpUARTDisplayValue(mdpPortA, (uint8_t)((testReg >> 8)& 0x000000FF));
+        mdpUARTDisplayValue(mdpPortA, (uint8_t)((testReg >> 16)& 0x000000FF));
+        mdpUARTDisplayValue(mdpPortA, (uint8_t)((testReg >> 24)& 0x000000FF));
 
     }
 }
