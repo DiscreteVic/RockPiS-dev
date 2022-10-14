@@ -1,14 +1,7 @@
 #ifndef RK3308
 #define RK3308
 
-typedef unsigned char   uint8_t;
-typedef unsigned short  uint16_t;
-typedef unsigned int    uint32_t;
-
-typedef enum{
-    false = 0,
-    true = 1
-} bool;
+#include "common.h"
 
 #define CRU_BASE_ADDR       0xFF500000U
 
@@ -33,6 +26,11 @@ typedef enum{
 
 #define GPIO_SWPORTA_DR     0x0000U
 #define GPIO_SWPORTA_DDR    0x0004U
+
+#define GPIO(num)           GPIO_BASE_ADDR + (GPIO_BASE_OFFSET * num)
+
+#define GPIO_DR(num)        GPIO(num) + GPIO_SWPORTA_DR
+#define GPIO_DDR(num)       GPIO(num) + GPIO_SWPORTA_DDR
 
 
 #define UART0_BASE_ADDR     0xFF0A0000U

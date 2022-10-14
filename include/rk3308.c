@@ -1,5 +1,5 @@
 #include "rk3308.h"
-
+#include "common.h"
 
 
 void writeWordRegister(uint32_t address, uint32_t value){
@@ -71,7 +71,7 @@ void wait_ms(uint32_t milliseconds){
     //AVOID TO USE MULTIPLICATION DUE TO RESOURCES CONSUPTION (TO BE CONFIRMED)
     for(j = 0; j < milliseconds; j++){
         //CYCLES VAULE OBTAINED EXPERIMENTALY
-        for(i = 0; i < 1413; i++);
+        for(i = 0; i < 2826; i++);
     }
 }
 
@@ -92,15 +92,15 @@ int initRK3308(){
 }
 
 void setGPIO_DDR(gpio_t gpio, uint32_t dirReg){
-    writeWordRegister(getIPBaseAddr(GPIO,gpio) + GPIO_SWPORTA_DDR, dirReg);
+    writeWordRegister(GPIO_DDR(gpio), dirReg);
 }
 
 void setGPIO_DR(gpio_t gpio, uint32_t dataReg){
-    writeWordRegister(getIPBaseAddr(GPIO,gpio) + GPIO_SWPORTA_DR, dataReg);
+    writeWordRegister(GPIO_DR(gpio), dataReg);
 }
 
 uint32_t getGPIO_DR(gpio_t gpio){  //NOT TESTED
-    return readWordRegister(getIPBaseAddr(GPIO,gpio) + GPIO_SWPORTA_DR);
+    return readWordRegister(GPIO_DR(gpio));
 }
 
 void setGPIO_Pin(gpio_t gpio, gpioPin_t pin, bool pinValue){
