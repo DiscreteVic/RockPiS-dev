@@ -1,5 +1,6 @@
 #include "rk3308.h"
 #include "common.h"
+#include "mdp.h"
 
 
 void writeWordRegister(uint32_t address, uint32_t value){
@@ -127,14 +128,22 @@ bool getGPIO_Pin(gpio_t gpio, gpioPin_t pin){ //NOT TESTED
 
 void initUART(){
 
+    struct mdpPort mdpPortA, mdpPortB;
+    mdpCreatePort(GPIO_DR(2), A4, MS_CYCLES, 1, &mdpPortA);
+    wait_ms(1000);
+    mdpUARTPrintString(mdpPortA, " Iniciar UART\n");
     // CONFIGURE FOUTPOSTDIV 
     // RK3308 TRM-Part1 2.5.1
     // FBDIV = 500, POSTDIV1 = 1, BYPASS = 0 => CRU_DPLL_CON0 = 0x----11F4
     writeMaskedRegister(CRU_DPLL_CON0, 0x11F4);
-
+    mdpUARTPrintString(mdpPortA, " CRU_DPLL_CON0 = ");
+    mdpUARTPrintWord(mdpPortA, readWordRegister(CRU_DPLL_CON0));
+    mdpUARTPrintString(mdpPortA, "\n");
     // DSMPD = 1, POSTDIV2 = 1, REFDIV = 1 => CRU_DPLL_CON1 = 0x----1021
     writeMaskedRegister(CRU_DPLL_CON1, 0x1021);
-
+    mdpUARTPrintString(mdpPortA, " CRU_DPLL_CON1 = ");
+    mdpUARTPrintWord(mdpPortA, readWordRegister(CRU_DPLL_CON1));
+    mdpUARTPrintString(mdpPortA, "\n");
 
     // CONFIGURE CGU
 
@@ -142,15 +151,30 @@ void initUART(){
 
     writeMaskedRegister(CRU_CLKSEL_CON13, 0x0000);
     writeMaskedRegister(CRU_CLKSEL_CON14, 0x8000);
+    mdpUARTPrintString(mdpPortA, " CRU_CLKSEL_CON13 = ");
+    mdpUARTPrintWord(mdpPortA, readWordRegister(CRU_CLKSEL_CON13));
+    mdpUARTPrintString(mdpPortA, "\n");
+    mdpUARTPrintString(mdpPortA, " CRU_CLKSEL_CON14 = ");
+    mdpUARTPrintWord(mdpPortA, readWordRegister(CRU_CLKSEL_CON14));
+    mdpUARTPrintString(mdpPortA, "\n");
     // RK3308 TRM-Part1 15.6.3`
     // Divider 46875/72
     writeWordRegister(CRU_CLKSEL_CON15, 0xB71B0048);
+    mdpUARTPrintString(mdpPortA, " CRU_CLKSEL_CON15 = ");
+    mdpUARTPrintWord(mdpPortA, readWordRegister(CRU_CLKSEL_CON15));
+    mdpUARTPrintString(mdpPortA, "\n");
 
 
     //Set de gates => G1_13 G1_15 G2_0
 
     writeMaskedRegister(CRU_CLKGATE_CON1, 0xA000);
     writeMaskedRegister(CRU_CLKGATE_CON2, 0x0001);
+    mdpUARTPrintString(mdpPortA, " CRU_CLKGATE_CON1 = ");
+    mdpUARTPrintWord(mdpPortA, readWordRegister(CRU_CLKGATE_CON1));
+    mdpUARTPrintString(mdpPortA, "\n");
+    mdpUARTPrintString(mdpPortA, " CRU_CLKGATE_CON2 = ");
+    mdpUARTPrintWord(mdpPortA, readWordRegister(CRU_CLKGATE_CON2));
+    mdpUARTPrintString(mdpPortA, "\n");
 
     //D1
 
@@ -172,6 +196,7 @@ void initUART(){
     writeByteRegister(UART1_DLL, 0, 0x01);
     writeByteRegister(UART1_DLH, 0, 0x00);
 
+    mdpUARTPrintString(mdpPortA, " A Bucle infinito UART\n");
     while(1){
     //Write data to THR Set MCR to start the transfer
     writeByteRegister(UART1_THR, 0, 0x5A);
